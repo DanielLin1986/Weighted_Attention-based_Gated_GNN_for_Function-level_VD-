@@ -17,7 +17,7 @@ This project processes Joern-generated CPGs as input and outputs vulnerability p
 
 WARVD stands out through its synergistic design, combining deep learning with gradient boosting for robust performance:
 
-- **Fine-tuned CodeBERT Embeddings**: Utilizes a CodeBERT model pre-trained and fine-tuned on C code corpora to produce contextualized node representations. This captures long-range semantic dependencies, far surpassing non-contextual methods like Word2Vec in encoding nuanced code intent (e.g., +29.4% precision gain on real-world benchmarks).
+- **Fine-tuned CodeBERT Embeddings**: Utilizes a CodeBERT model pre-trained and fine-tuned on C code corpora to produce contextualized node representations. This captures long-range semantic dependencies, far surpassing non-contextual methods like Word2Vec in encoding nuanced code intent.
   
 - **Edge Type-Encoding and Attention Mechanism**: Encodes diverse edge types (AST for syntax, CFG for control flows, PDG for data dependencies, and call edges for inter-procedural links) while applying weighted attention to prioritize vulnerability-indicative relationships, such as unchecked branches or unsafe API calls.
 
@@ -26,8 +26,6 @@ WARVD stands out through its synergistic design, combining deep learning with gr
 - **Weight Optimization for Imbalance Handling**: Incorporates learnable weighted parameters and cost-sensitive loss functions to amplify the minority vulnerable class, ensuring reliable generalization on sparse real-world data.
 
 - **Hybrid Classification Pipeline**: Extracts high-level representations from WAGGNN (Weighted Attention-based Gated GNN) hidden layers and feeds them into a LightGBM ensemble classifier, mitigating overfitting and boosting efficiency for production-scale deployment.
-
-These features culminate in competitive results: F1-scores of 0.67 on imbalanced real-world datasets and 0.97 on synthetic benchmarks like SARD, outperforming nine state-of-the-art baselines across four open-source projects.
 
 ## Repository Structure
 
