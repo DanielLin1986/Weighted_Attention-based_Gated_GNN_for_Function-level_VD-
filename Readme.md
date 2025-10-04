@@ -98,8 +98,8 @@ python main.py run full model warvd
 ```
 
 ## Datasets
-- **Real-World Dataset**: Custom collection from four open-source C projects (1:65 imbalance). Subset available in `data/real-world/` (anonymized for privacy).
-- **SARD**: Synthetic Juliet Test Suite for vulnerability benchmarks. Download full version from [NIST SARD](https://samate.nist.gov/) and preprocess with `src/graphs/preprocess_sard.py`.
+- **Real-World Dataset**: Custom collection from four open-source C projects (Please contact guanjun.lin@fjsmu.edu.cn for using the dataset).
+- **SARD**: Synthetic Juliet Test Suite for vulnerability benchmarks. Download full version from [NIST SARD](https://samate.nist.gov/) .
 - Preprocessing generates CPG JSONs compatible with Joern.
 
 ## License
