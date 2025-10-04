@@ -83,7 +83,7 @@ class DatasetBuilder:
         # 检测GPU可用性
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         logger.info(f"Using device: {self.device}")
-        # 初始化CodeBERT模型
+        # CodeBERT initialization
         #config_class, model_class, tokenizer_class = MODEL_CLASSES['roborta']
         self.codbert_config = RobertaConfig.from_pretrained(r'D:\Research\CodeBERT\codebert-base', cache_dir=None, num_labels=1)
         self.codebert_tokenizer = RobertaTokenizer.from_pretrained(r'D:\Research\CodeBERT\codebert-base', do_lower_case=False, cache_dir=None)
@@ -91,7 +91,7 @@ class DatasetBuilder:
 
         self.model1 = Model(self.codebert_model, self.codbert_config, self.codebert_tokenizer)
         # 加载微调模型的状态字典（带键名修复）
-        state_dict_path = r'D:\Research\CodeBERT\saved_models\The_second_best_checkpoint-2025-04\checkpoint-best-acc\sard_fine-tuning_model.bin'
+        state_dict_path = r'D:\Research\CodeBERT\fine-tuning_model.bin'
         pretrained_dict = torch.load(state_dict_path, map_location=self.device)
 
         # 修复键名：移除"encoder.roberta."前缀中的"roberta."
@@ -216,7 +216,7 @@ class DatasetBuilder:
             A list of torch graph objects
         """
         # setup data locations
-        graph_dir = os.path.join(self.project_dir, 'data', 'SARD_src_files_type' + os.sep + 'test_graphs')
+        graph_dir = os.path.join(self.project_dir, 'data', 'sard' + os.sep + 'test_graphs')
         [(_, _, graph_name_list)] = [x for x in os.walk(graph_dir)]
         #setup containers
         dataset_id = []
@@ -280,7 +280,7 @@ class DatasetBuilder:
     def encode_labels(self) -> None:
         """Save the label encoding for AST node labels
         """
-        graph_dir = os.path.join(self.project_dir, "data", 'SARD_src_files_type' + os.sep + 'test_graphs')
+        graph_dir = os.path.join(self.project_dir, "data", 'sard' + os.sep + 'test_graphs')
         [(_, _, graph_name_list)] = [x for x in os.walk(graph_dir)]
         label_set = set({})
         for f_name in graph_name_list:
@@ -351,7 +351,7 @@ class DatasetBuilder:
     def prepare_torch_data(self, file_name: str, num_nodes: Optional[int] = None) -> geom_data.Data:
         """Optimized pipeline with edge type features"""
         # 1. Fast JSON loading
-        graph_path = os.path.join(self.project_dir, 'data', 'SARD_src_files_type' + os.sep + 'test_graphs', file_name)
+        graph_path = os.path.join(self.project_dir, 'data', 'sard' + os.sep + 'test_graphs', file_name)
         with open(graph_path, 'r', encoding='utf-8') as f:
             json_data = json.load(f)
 
@@ -411,7 +411,7 @@ class DatasetBuilder:
     def prepare_torch_data_for_visualization(self, file_name: str, num_nodes: Optional[int] = None) -> geom_data.Data:
         """优化的数据准备流程，保存原始信息用于注意力可视化"""
         # 1. 加载JSON数据
-        graph_path = os.path.join(self.project_dir, 'data', 'test_graphs', file_name)
+        graph_path = os.path.join(self.project_dir, 'data', 'sard', 'test_graphs', file_name)
         with open(graph_path, 'r', encoding='utf-8') as f:
             json_data = json.load(f)
 

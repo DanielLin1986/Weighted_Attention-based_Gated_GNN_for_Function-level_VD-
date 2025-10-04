@@ -9,7 +9,7 @@ from itertools import chain
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks import ModelCheckpoint
 from src.utils import getAccuracy
-from src.model import DevignLightning
+from src.model import WARVDLightning
 from src.prepare import JoernExeError, GraphDataLightning, DatasetBuilder
 from src.utils import PROJECT_ROOT, parse_args, process_joern_error, setup, extract_representations, ListToCSV, extract_train_set_repre, extract_validation_set_repre, extract_test_set_repre, save_pickle, load_pickle
 from sklearn.utils import class_weight
@@ -18,7 +18,7 @@ import pickle as cPickle
 from datetime import datetime
 from src.utils import generate_id_labels
 
-# run full model devign
+# run full model warvd
 
 def main(args):
 
@@ -52,7 +52,7 @@ def main(args):
         'batch_size': 16
     }
     pl.seed_everything(42)
-    model = DevignLightning(args.architecture, lr, **model_kwargs)
+    model = WARVDLightning(args.architecture, lr, **model_kwargs)
     torch.backends.cudnn.benchmark = True # Enable CUDA optimization
     try:
         data_module = GraphDataLightning(**data_kwargs) # Run this for the first time.
@@ -118,7 +118,7 @@ def main(args):
         #ckpt_path = r'D:\Research\GGNN_test\data\models\codebert\epoch=23-val_loss=0.066809-val_acc=0.000000_Jul08_22-11-25_CodeBERT_783_160_5_5x_BS16.ckpt'
         #ckpt_path = r'D:\Research\GGNN_test\data\models\codebert\epoch=25-val_loss=0.062480-val_acc=0.000000_Jul15_16-22-58_improvedModel_783-192-3-4-BS16.ckpt' #Improved attention model
         ckpt_path = r'D:\Research\GGNN_test\data\models\codebert\epoch=09-val_loss=0.362239-val_acc=0.000000_Sep12_11-07-46fine-tuned_CodeBERT_783-168-3-4-BS16_cpg_libtiff.ckpt' #Fine-tuned codeBERT,better result!
-        lg_model = DevignLightning.load_from_checkpoint(checkpoint_path=ckpt_path)
+        lg_model = WARVDLightning.load_from_checkpoint(checkpoint_path=ckpt_path)
         lg_model = lg_model.cuda()
         lg_model.eval()
         feature_arr = []

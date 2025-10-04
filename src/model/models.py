@@ -54,7 +54,7 @@ class GGNNFlatSum(nn.Module):
         x = torch.sigmoid(x)
         return x
 
-class Devign(nn.Module):
+class WARVD(nn.Module):
     def __init__(self, input_channels, hidden_channels, num_layers, edge_attr_dim: int, aggr='mean', **kwargs):
         super().__init__()
         # 1. Edge encoding

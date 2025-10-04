@@ -1,4 +1,4 @@
-from src.model import GGNNFlatSum, Devign
+from src.model import GGNNFlatSum, WARVD
 from src.metrics import BinarySensitivity
 import pickle
 import torch
@@ -9,14 +9,13 @@ import torch_geometric.data as geom_data
 import pytorch_lightning as pl
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
-architecture_dict = {'devign': Devign,
-                     'flat': GGNNFlatSum}
+architecture_dict = {'warvd': WARVD, 'flat': GGNNFlatSum}
 
 def SavedPickle(path, file_to_save):
     with open(path, 'wb') as handle:
         pickle.dump(file_to_save, handle)
 
-class DevignLightning(pl.LightningModule):
+class WARVDLightning(pl.LightningModule):
     """ Lightning module for training. Optimized with AdamW
     """
     def __init__(self, architecture_name: str, lr: float, **model_kwargs) -> None:
